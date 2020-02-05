@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <style>
+            @media ( max-width: 750px ) {
+                /* We tell both sidebars to share a row */
+                .grid-box{
+                    flex-basis: 100% !important;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div style="margin: 0px auto; width: 80%; background-color: #CCC;">
+            <div style="padding: 10px;">
+                <div style="display: flex; flex-flow: wrap;">
+                    <div class="grid-box" style="height: 250px; background-color: #EEE; flex: 1;">Testing</div>
+                    <div class="grid-box" style="height: 250px; background-color: #AAA; flex: 2;">Testing 2</div class="grid-box">
+                    <div class="grid-box" style="flex: 100%; height: 0"></div class="grid-box">
+                    <div class="grid-box" style="height: 250px; background-color: #EEE; flex: 2">Testing 3</div class="grid-box">
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

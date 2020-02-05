@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <link href="./styles.css" rel="stylesheet">
+    </head>
+    <body>
+        <h1>
+            Title
+        </h1>
+        <h2>Subtitle</h2>
+        <h3>Sub Sub Title</h3>
+        
+        <div class="my-div">
+            This is a div
+        </div>
+        <div class="my-div" id="div2">
+            This is div 2
+            <div>
+                I'm an inner div <a href="#">And here's a link</a>
+                <div>
+                    Third layer
+                    <div>
+                        Fourth Layer
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="my-div">
+            This is div 3
+        </div>
+
+        <a href="https://www.google.com">Google</a>
+
+        <ul>
+            <li>List Item 1</li>
+            <li>List Item 2</li>
+        </ul>
+
+        <p>
+            This is a <em>paragraph</em> <strong>for sure</strong>
+        </p>
+
+        <p>
+            Here is my paragraph
+            <img id="imageTest" src="./images/image.jpg">
+            <a href="#" onclick="testFunc()">DO SOMETHING</a>
+        </p>
+
+        <script language="javascript">
+            console.log("Hey");
+
+            function testFunc(){
+                document.getElementById('imageTest').style.opacity = .5
+            }
+        </script>
+
+    </body>
+</html>

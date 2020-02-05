@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>This is my Space Test</title>
+        <style>
+            * {
+                overflow:auto
+            }
+
+            .internal{
+                width: 50%;
+                background-color: #EEE; 
+                padding: 15px;
+            }
+            
+            @media (max-width: 800px) {
+                .internal{
+                    width: 100%;
+                    background-color: red;
+                }
+            }
+
+            @media (min-width: 801px) and (max-width: 1000px) {
+                .internal{
+                    width: 75%;
+                    background-color: blue;
+                }
+            }
+        </style>
+    </head>
+    <body style="margin: 0;">
+        <div style="width: 100vw; height: 100vh;">
+
+            <div id="container" style="width: 90%; height: 200px; margin: 5%; background-color: #CCC; ">
+                <div class="internal">
+                    Hey
+                </div>
+            </div>
+
+        </div>
+    </bod>
+</html>

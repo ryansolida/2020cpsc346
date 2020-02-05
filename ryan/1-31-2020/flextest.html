@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <style>
+            *{
+                font-family: sans-serif;
+            }
+
+            #boxContainer{
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                border: 1px solid black;
+                height: 500px;
+                align-items: center;
+            }
+
+            .flex-child{
+                background-color: #DDD;
+                border: 2px solid #AAA;
+                padding: 15px;
+                margin: 15px;
+                flex: 1; 
+            }
+        </style>
+    </head>
+    <body>
+        <div id="boxContainer">
+            <div class="flex-child">This is my Text</div>
+            <div class="flex-child">This is my Text</div>
+            <div class="flex-child" style="flex: 15; align-self: flex-end">This is my Text</div>
+            <div class="flex-child">This is my Text</div>
+        </div>
+    </body>
+</html>
