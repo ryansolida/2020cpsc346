@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>This is my title</title>
+        <style>
+            .internal{
+                width: 50%;
+                background-color: #EEE; padding: 15px;
+            }
+            @media (max-width: 801px){
+                .internal{
+                    width: 100%;
+                    background-color: red;
+                }
+            }
+            @media (min-width: 801px) and (max-width: 1000px){
+                .internal{
+                    width: 75%;
+                    background-color: blue;
+                }
+            }
+
+        </style>
+    </head>
+    <body style="margin: 0;">
+        <div style="width: 100vw; height: 100vh; padding-top: 0.1px;"> <!--You need this padding -->
+            <div id="container" style="width: 90%; height: 200px; margin: 5%; background-color: #666;">
+                <div class="internal">
+                    Hello
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

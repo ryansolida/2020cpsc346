@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <style>
+
+            #gridContainer{
+                display: flex;
+                flex-flow: wrap;
+            }
+
+            .clearfix{
+               clear: both; 
+            }
+
+            .grid-block{
+            }
+
+            #bodycontainer{
+                width: 80%;
+                background-color: #EEE;
+                margin: 0px auto;
+            }
+
+            #logo{
+                width: 50%;
+                float: left;
+            }
+
+            #navigation{
+                width: 50%;
+                float: left;
+            }
+
+            #navigation ul li{
+                float: right;
+                list-style: none;
+                padding: 0px;
+                margin-left: 15px;
+
+            }
+
+            @media (max-width: 950px)   {
+                #bodycontainer{
+                    width: 100%;
+                }
+
+                .grid-block{
+                    width: 100%;
+                }
+            }
+
+        
+        </style>
+    </head>
+    <body style="margin: 0;">
+        <div id="bodyContainer">
+            <div id="bodyPadding" style="padding: 20px;">
+
+                <div id="header">
+                    <div id="logo">
+                        <h1>This is my float grid </h1>
+                    </div>
+                    <div id="navigation">
+                        <ul>
+                            <li>about</li>
+                            <li>
+                                <a href="#contact">
+                                    contact
+                            </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div id="gridContainer">
+                    <div class="grid-block" style="background-color: yellow; flex-grow: 1;">Block 1</div>
+                    <div class="grid-block" style="background-color: red; flex-grow: 2;">Block 2</div>
+                    <div class="grid-block" style="background-color: blue; flex-grow: 1;">Block 2</div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
