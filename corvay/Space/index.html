@@ -1,0 +1,41 @@
+<html>
+<head>
+<style>
+    *{
+        overflow: auto;
+    }
+    .internal{
+        width: 50%;
+        background-color: #EEE;
+        padding: 15px;
+    }
+
+    @media (max-width: 800px){
+        .internal{
+            width: 100%;
+            background-color: red;
+        }
+    }
+    @media(min-width: 801px) and (max-width: 1000px){
+        .internal{
+            width: 75%;
+            background-color: blue;
+        }
+    }
+</style>
+</head>
+<body style="margin: 0;">
+    <div style="width: 100vw; height: 100vh; overflow: auto;">
+
+        <div id="container" style="width: 90%; height: 200px; background-color:#CCC; margin: 5%; ">
+
+            <div class="internal">
+                Hey
+            </div>
+
+        </div>    
+
+    </div>    
+    
+</body>
+</html>

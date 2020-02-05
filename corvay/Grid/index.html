@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <style>
+            .grid-block{
+                width: 50%; 
+                height: 250px; 
+                float: left;
+            }
+            #bodyContainer{
+                width: 80%; 
+                background-color: #EEE; 
+                margin: 0px auto; 
+            }
+            #logo{
+                width: 50%;
+                float: left;
+            }
+            #navigation{
+                width: 50%;
+                float: left;
+            }
+            #navigation ul li{
+                float: right;
+                list-style: none;
+                padding: 0;
+                margin-left: 15px;
+            }
+            .clearfix{
+                clear: both;
+            }
+            @media (max-width: 950px){
+                #bodyContainer{
+                    width: 100%;
+                }
+                .grid-block{
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
+    <body style="margin: 0;">
+        <div id="bodyContainer">
+            <div id="bodyPadding" style="padding: 20px;">
+                <div id="header">
+                    <div id="logo">
+                        <h1>This is my Float grid.</h1>
+                    </div>
+                    <div id="navigation">
+                        <ul>
+                            <li>About</li>
+                            <a href="#contact   "><li>Contact</li></a>
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="grid-block" style=" background-color: yellow;">Block 1</div>
+                <div class="grid-block" style= "background-color: red;">Block 2</div>
+                <div class="grid-block" style= "background-color: blue;">Block 3</div>
+                <div class="grid-block" style= "background-color: green">Block 4</div>
+            </div>  
+        </div>
+    </body>
+</html>
