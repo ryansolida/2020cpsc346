@@ -1,0 +1,42 @@
+body{
+    margin: 50px;
+}
+h1{
+    color: #598b20
+}
+
+div{
+    padding: 15px;
+    font-size: 1.5em;
+    border-radius: 10px;
+    margin: 20px 0px;
+    border: 2px solid white;
+    box-shadow: 0px 3px 7px #666;
+    color: white;
+    text-shadow: 0px 0px 3px #333;
+    font-weight: bold;
+    font-family: sans-serif;
+    opacity: .5;
+    transition: all .25s;
+}
+
+div:hover{
+    opacity: 1;
+    background-color: #222 !important;
+}
+#div2{
+    background-color: #EEE;
+    padding: 25px
+}
+
+.my-div{
+    background-color: #DDD;
+}
+
+#div2 div{
+    font-size: 1em;
+    background-color: #ccc;
+}
+#div2 div a{
+    color: wheat
+}

@@ -1,0 +1,108 @@
+*{
+    font-family: sans-serif;
+}
+div{
+    border: 1px solid blue;
+    margin: 10px;
+}
+body{
+    margin: 0;
+}
+a{
+    text-decoration: none;
+}
+div, ul{
+    /* border: 1px solid blue; */
+    min-height: 10px;
+}
+
+div>div{
+    margin: 10px; 
+}
+
+#pageWrapper{
+    width: 1000px;
+    margin: 0 auto;
+}
+
+#headerContainer{
+    display: flex;
+}
+
+#logoContainer{
+    flex: 1;
+}
+
+#logoContainer img{
+    max-width: 250px;
+}
+
+#navContainer{
+    flex: 4;  
+    display: flex; 
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#nav{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#nav li{
+    display: inline-block;
+
+}
+
+#nav li a{
+    padding: 15px;
+    background-color: #333;
+    color: white;
+    margin-left: 15px;
+}
+#bodyWrapper{
+    width: center;
+    height: 10px;
+    background-color: #ff9a17;
+}
+
+#header{
+    width: 300px;
+    height: 1000px;
+    background-color: #ff9a17;
+    float: right;
+}
+#headlines{
+    height: max-content;
+    text-align: center;
+    font-weight: bold;
+}
+#headlines2{
+    height: max-content;
+    text-align: center;
+    font-weight: bold;
+}
+#headlines3{
+    height: max-content;
+    text-align: center;
+    font-weight: bold;
+}
+#mainText{
+    height: 1000px;
+}
+#textParagraph1{
+    height: max-content;
+}
+#headerP1{
+    font-weight: bold;
+}
+#textParagraph2{
+    height: max-content;
+}
+#headerP2{
+    font-weight: bold;
+}
+#headerP3{
+    font-weight: bold;
+}
