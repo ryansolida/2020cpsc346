@@ -1,108 +1,110 @@
 *{
     font-family: sans-serif;
 }
-div{
-    border: 1px solid blue;
-    margin: 10px;
-}
 body{
     margin: 0;
 }
-a{
-    text-decoration: none;
-}
-div, ul{
-    /* border: 1px solid blue; */
-    min-height: 10px;
-}
-
-div>div{
-    margin: 10px; 
-}
-
 #pageWrapper{
     width: 1000px;
     margin: 0 auto;
 }
-
+#bodyWrapper{
+    border-top: 6px solid #FF9C0F;
+}
+div{
+    border: 1px solid blue;
+    margin: 10px;
+}
 #headerContainer{
     display: flex;
 }
-
 #logoContainer{
     flex: 1;
 }
-
 #logoContainer img{
     max-width: 250px;
 }
-
 #navContainer{
-    flex: 4;  
-    display: flex; 
+    flex: 4;
+    display: flex;
     justify-content: flex-end;
     align-items: center;
 }
-
 #nav{
+    font-size: 16px;
     margin: 0;
-    padding: 0;
     list-style: none;
+    padding: 0;
 }
-
 #nav li{
     display: inline-block;
-
 }
-
 #nav li a{
     padding: 15px;
-    background-color: #333;
-    color: white;
-    margin-left: 15px;
-}
-#bodyWrapper{
-    width: center;
-    height: 10px;
-    background-color: #ff9a17;
+    background-color: #aaa;
+    margin-left:15px;
+    color: #000;
 }
 
-#header{
-    width: 300px;
-    height: 1000px;
-    background-color: #ff9a17;
-    float: right;
+
+
+/* Body */
+#bodyContainer{
+    display: flex;
 }
-#headlines{
-    height: max-content;
+#main{
+    flex-grow: 4;
+    width: 600px;
+    padding: 20px;
+}
+#text{
+    margin: 5px 5px 30px 5px;
+}
+#text h1{
+    margin: 0;
+    color: 	rgb(170, 106, 17);
+}
+#text p{
+    margin: 0;
+    font-size: 16px;
+}
+#text a{
+    font-size: 16px;
+    color: rgb(170, 106, 17) ;
+}
+
+#aside{
+    flex-grow: 1;
+    width: 200px;
+    padding: 20px;
+    background-color:#FF9C0F ;
+}
+#aside h1{
     text-align: center;
+    margin-bottom: 40px;
+    font-size: 25px;
+    color: #fff;
+}
+#text2{
+    margin-bottom: 40px;
+    margin-right: 13px;
+}
+#text2 h2{
     font-weight: bold;
 }
-#headlines2{
-    height: max-content;
-    text-align: center;
-    font-weight: bold;
+#text2 p{
+    font-size: 15px;
 }
-#headlines3{
-    height: max-content;
-    text-align: center;
-    font-weight: bold;
+#text2 a{
+    color: rgb(151, 95, 15) ;
+    font-size: 16px;
 }
-#mainText{
-    height: 1000px;
+
+
+
+div, ul{
+    min-height: 10px;
 }
-#textParagraph1{
-    height: max-content;
-}
-#headerP1{
-    font-weight: bold;
-}
-#textParagraph2{
-    height: max-content;
-}
-#headerP2{
-    font-weight: bold;
-}
-#headerP3{
-    font-weight: bold;
+a{
+    text-decoration: none;
 }
