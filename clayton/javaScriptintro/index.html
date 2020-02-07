@@ -1,0 +1,16 @@
+<html>
+    <body>
+    Hey <a href="#" onclick="yo()"> whats up</a>
+        <script>
+            function yo(){
+                var newDiv = document.createElement('div');
+                newDiv.innerHTML = "<div id='myNewDiv'>Hey Man <a href='#' onclick='foo()''>Click ME</a></div>";
+                document.body.appendChild(newDiv);
+            }
+            function foo(){
+                var myNewDiv = document.getElementById('myNewDiv');
+                myNewDiv.style.fontSize = '10em';
+            }
+        </script>
+    </body>
+</html>
