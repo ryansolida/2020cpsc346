@@ -57,18 +57,18 @@ div{
     width: 600px;
     padding: 20px;
 }
-#text{
+.text{
     margin: 5px 5px 30px 5px;
 }
-#text h1{
+.text h1{
     margin: 0;
     color: 	rgb(170, 106, 17);
 }
-#text p{
+.text p{
     margin: 0;
     font-size: 16px;
 }
-#text a{
+.text a{
     font-size: 16px;
     color: rgb(170, 106, 17) ;
 }
@@ -85,17 +85,17 @@ div{
     font-size: 25px;
     color: #fff;
 }
-#text2{
+.text2{
     margin-bottom: 40px;
     margin-right: 13px;
 }
-#text2 h2{
+.text2 h2{
     font-weight: bold;
 }
-#text2 p{
+.text2 p{
     font-size: 15px;
 }
-#text2 a{
+.text2 a{
     color: rgb(151, 95, 15) ;
     font-size: 16px;
 }
