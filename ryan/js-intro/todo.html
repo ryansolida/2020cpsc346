@@ -1,0 +1,48 @@
+<html>
+
+<body>
+    
+
+    <h1>To Dos</h1>
+    <ul id="toDoList">
+        <li>
+            <label>
+                <input type="checkbox">
+                Take Out The Trash
+            </label>
+        </li>
+        <li>
+            <label>
+                <input type="checkbox">
+                Clean The Bathroom
+            </label>
+        </li>
+        <li>
+            <label>
+                <input type="checkbox">
+                Feed The cats
+            </label>
+        </li>
+    </ul>
+</body>
+<script>
+    var checkboxes = document.querySelectorAll('#toDoList input[type=checkbox]'), i;
+    for ( i = 0; i<checkboxes.length; i++ ){
+        var checkbox = checkboxes[i];
+        checkbox.addEventListener('click',checkboxClicked)
+    }
+    
+    function checkboxClicked(caller){
+        var item = caller.target.closest('li');
+        if (caller.target.checked ){
+            item.style.color = '#CCC';
+            item.style.textDecoration = 'line-through';
+        } else {
+            item.style.color = '';
+            item.style.textDecoration = '';
+        }
+    }
+    
+</script>
+
+</html>
