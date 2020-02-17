@@ -1,0 +1,63 @@
+<html>
+
+<body>
+    
+
+    <h1>To Dos</h1>
+    <ul id="toDoList">
+        <li>
+            <label>
+                <input type="checkbox">
+                Take Out The Trash
+            </label>
+        </li>
+        <li>
+            <label>
+                <input type="checkbox">
+                Clean The Bathroom
+            </label>
+        </li>
+        <li>
+            <label>
+                <input type="checkbox">
+                Feed The cats
+            </label>
+        </li>
+    </ul>
+    <input type="text" id="newToDoText">
+    <a href="javascript:;" onclick="newToDo()">Add</a>
+</body>
+<script>
+    function setClickListener(){
+        var checkboxes = document.querySelectorAll('#toDoList input[type=checkbox]'), i;
+        for ( i = 0; i<checkboxes.length; i++ ){
+            var checkbox = checkboxes[i];
+            checkbox.addEventListener('click',checkboxClicked)
+        }
+    }
+    setClickListener();
+    
+    function checkboxClicked(caller){
+        var item = caller.target.closest('li');
+        if (caller.target.checked ){
+            item.style.color = '#CCC';
+            item.style.textDecoration = 'line-through';
+        } else {
+            item.style.color = '';
+            item.style.textDecoration = '';
+        }
+    }
+    
+
+    function newToDo(){
+        var toDo = document.getElementById('newToDoText').value;
+        //var newToDoHtml = "<li><label><input type=\"checkbox\">"+toDo+"</label></li>";
+        var newLi = document.createElement('li');
+        newLi.innerHTML = "<label><input type=\"checkbox\">"+toDo+"</label>";
+        document.getElementById('toDoList').appendChild(newLi)
+        setClickListener();
+        document.getElementById('newToDoText').value = '';
+    }
+</script>
+
+</html>
