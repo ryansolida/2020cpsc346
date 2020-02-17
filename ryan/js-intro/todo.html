@@ -24,24 +24,39 @@
             </label>
         </li>
     </ul>
+    <input type="text" id="newToDoText">
+    <a href="#" onclick="createNewTodo()">+ Add</a>
 </body>
 <script>
-    var checkboxes = document.querySelectorAll('#toDoList input[type=checkbox]'), i;
-    for ( i = 0; i<checkboxes.length; i++ ){
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+    function createNewTodo(){
+        var newToDoText = document.getElementById('newToDoText').value;
+        var newToDoHtml = '<li><label><input type="checkbox">'+newToDoText+'</label></li>';   
+        document.getElementById('toDoList').innerHTML += newToDoHtml;
+        document.getElementById('newToDoText').value = '';
+        document.getElementById('newToDoText').focus();
+    }
+
+    for ( var i = 0; i<checkboxes.length; i++ ){
         var checkbox = checkboxes[i];
-        checkbox.addEventListener('click',checkboxClicked)
+        checkbox.addEventListener('click',checkboxClicked);
     }
     
-    function checkboxClicked(caller){
-        var item = caller.target.closest('li');
-        if (caller.target.checked ){
-            item.style.color = '#CCC';
-            item.style.textDecoration = 'line-through';
-        } else {
-            item.style.color = '';
-            item.style.textDecoration = '';
+    function checkboxClicked(clickEvent){
+        //console.log(clickEvent);
+        var checkboxThatWasClicked = clickEvent.target //get the "target" of the event (will be ourcheckbox)
+        var toDoItemLi = checkboxThatWasClicked.closest('li'); //we want the closest parent <li> because that's what we're going to style
+        if (checkboxThatWasClicked.checked ){ //if our checkbox was checked, style appropriately
+            toDoItemLi.style.color = '#CCC';
+            toDoItemLi.style.textDecoration = 'line-through';
+        } else { //otherwise, remove our styling
+            toDoItemLi.style.color = '';
+            toDoItemLi.style.textDecoration = '';
         }
+
     }
+    
     
 </script>
 
