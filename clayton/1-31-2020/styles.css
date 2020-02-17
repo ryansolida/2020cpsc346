@@ -11,10 +11,7 @@ body{
 #bodyWrapper{
     border-top: 6px solid #FF9C0F;
 }
-div{
-    border: 1px solid blue;
-    margin: 10px;
-}
+
 #headerContainer{
     display: flex;
 }
