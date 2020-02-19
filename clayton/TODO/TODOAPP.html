@@ -1,0 +1,59 @@
+<html>
+    <body>
+        <h1> To Dos </h1>
+        <ul id="toDoList">
+            <li>   
+                <label>
+                    <input type="checkbox">
+                    Take Out The Trash
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    Clean The Bathroom
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    Feed The Cats
+                </label>
+            </li>
+        </ul>
+        <input type="text" id="newText">
+        <a href="#" onclick="createNewToDo()">+ Add</a>
+    </body>
+    <script>
+        var checkboxes = document.querySelectorAll('input[type=checkbox]');
+        for ( var i = 0; i<checkboxes.length; i++) {
+            var checkbox = checkboxes[i];
+            checkbox.addEventListener('dblclick', checkboxClicked)
+        }
+
+
+        function checkboxClicked(clickEvent){ 
+            console.log(clickEvent);
+            return
+            var checkboxThatWasChecked = clickEvent.target 
+            var toDoItem = checkboxThatWasChecked.closest('li');
+            if (checkboxThatWasChecked.checked) {
+                toDoItem.style.color = '#CCC';
+                toDoItem.style.textDecoration = 'line-through';
+            } else {
+                toDoItem.style.color = '';
+                toDoItem.style.textDecoration = '';
+            }
+        
+        }
+
+        function createNewToDo(){
+            var newText = document.getElementById('newText').value;
+            var newTextHTML = '<li><label><input type="checkbox">'+newText+'</label></li>';
+            document.getElementById('toDoList').innerHTML += newTextHTML;
+            document.getElementById('newText').value = '';
+            document.getElementById('newText').focus();
+
+        }
+    </script>
+</html>
