@@ -5,36 +5,56 @@
             <li>   
                 <label>
                     <input type="checkbox">
-                    Take Out The Trash
+                    Take Out The Trash 
                 </label>
+                - <a href="#" class="delete">Delete</a>
             </li>
             <li>
                 <label>
                     <input type="checkbox">
-                    Clean The Bathroom
+                    Clean The Bathroom 
                 </label>
+                - <a href="#" class="delete">Delete</a>
             </li>
             <li>
                 <label>
                     <input type="checkbox">
-                    Feed The Cats
+                    Feed The Cats 
                 </label>
+                - <a href="#" class="delete">Delete</a>
             </li>
         </ul>
         <input type="text" id="newText">
         <a href="#" onclick="createNewToDo()">+ Add</a>
     </body>
-    <script>
-        var checkboxes = document.querySelectorAll('input[type=checkbox]');
-        for ( var i = 0; i<checkboxes.length; i++) {
-            var checkbox = checkboxes[i];
-            checkbox.addEventListener('dblclick', checkboxClicked)
+    <script>   
+
+        //Start page functions
+        function createNewToDo(){
+            var newText = document.getElementById('newText').value;
+            
+            if ( newText == '' ){ //disables a null checkbox
+               return; 
+            }
+            var newToDo = document.createElement('li');
+            newToDo.innerHTML = '<label><input type="checkbox">'+newText+'</label>- <a href="#" class="delete">Delete</a>';
+            document.getElementById('toDoList').appendChild(newToDo);
+            document.getElementById('newText').value = '';
+            document.getElementById('newText').focus();
+            checkBoxListenter();
+            setDeleteListeners();
         }
 
-
+        function checkBoxListenter(){
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            for ( var i = 0; i<checkboxes.length; i++){
+                var checkbox = checkboxes[i];
+                checkbox.addEventListener('click',checkboxClicked);
+            }
+        }
+            
         function checkboxClicked(clickEvent){ 
             console.log(clickEvent);
-            return
             var checkboxThatWasChecked = clickEvent.target 
             var toDoItem = checkboxThatWasChecked.closest('li');
             if (checkboxThatWasChecked.checked) {
@@ -44,16 +64,31 @@
                 toDoItem.style.color = '';
                 toDoItem.style.textDecoration = '';
             }
+        }
         
+        function setDeleteListeners(){
+        var deletes = document.querySelectorAll('a.delete');
+        for ( var i = 0; i<deletes.length; i++){
+            var deleteLink = deletes[i];
+            deleteLink.addEventListener('click',deleteToDo);
+            }
         }
 
-        function createNewToDo(){
-            var newText = document.getElementById('newText').value;
-            var newTextHTML = '<li><label><input type="checkbox">'+newText+'</label></li>';
-            document.getElementById('toDoList').innerHTML += newTextHTML;
-            document.getElementById('newText').value = '';
-            document.getElementById('newText').focus();
-
+        function deleteToDo(clickEvent){
+            var deleteThatWasChecked = clickEvent.target 
+            var toDoItem = deleteThatWasChecked.closest('li');
+            toDoItem.parentNode.removeChild(toDoItem);
         }
+            
+        //end page function
+        //let's get the page ready
+        checkBoxListenter();
+        setDeleteListeners();
+        document.getElementById('newText').addEventListener( 'keyup', function (e) {
+            if ( e.keyCode == 13 ) {
+            createNewToDo();
+            }
+        })
+        
     </script>
 </html>
