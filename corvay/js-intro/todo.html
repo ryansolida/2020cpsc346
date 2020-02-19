@@ -1,36 +1,70 @@
 <html>
+    <head>
+        <link type="text/css" rel="stylesheet" href="main.css">
+    </head>
     <body>
         <h1>To do's</h1>
         <ul id="todoList">
             <li id="trash">
                 <label>
                     <input type="checkbox">
-                    Takeout the trash.
+                    Takeout the trash. - 
                 </label>
+                <a href="#" class="delete" >Delete</a>
             </li>
             <li id="bathroom">
                 <label>
                     <input type="checkbox">
-                    Clean the bathroom.
+                    Clean the bathroom. - 
                 </label>
+                <a href="#" class="delete" >Delete</a>
             </li>
             <li>
                 <label>
                     <input type="checkbox">
-                    Feed the cats.
+                    Feed the cats. - 
                 </label> 
+                <a href="#" class="delete" >Delete</a>
             </li>           
         </ul>
         <input id="newToDoText" type="text">
-        <a href="#" onclick="createNewToDo()"> ADD</a>;
+        <a href="#" onclick="createNewToDo()">+ADD</a>
     </body>
     <script>
-        var checkboxes = document.querySelectorAll('input[type= checkbox]');
+        function createNewToDo(){
+            var newToDoText = document.getElementById("newToDoText").value;
+            if(newToDoText == ""){//Doesn't allow the user to add a blank todo
+                return;
+            }
+            //var newToDoHtml = '<li><label><input type="checkbox">' + newToDoText +'</label></li>';
+            var newToDoLi = document.createElement("li"); //Introduce a new element to the DOM
+            newToDoLi.innerHTML ='<label><input type="checkbox">' + newToDoText + ' -</label> <a href="#" class="delete" >Delete</a>';//Set the inner content
+            document.getElementById('todoList').appendChild(newToDoLi); //append our new element to our list
+            setCheckboxListeners();
+            setDeleteListeners();
+            //document.getElementById("todoList").innerHTML += newToDoHtml;
+            document.getElementById("newToDoText").value = '';
+            document.getElementById("newToDoText").focus();
+        }
 
-        for(var i = 0; i < checkboxes.length; i++){
-            var checkbox = checkboxes[i];
+        function setDeleteListeners(){
+            var deletes = document.querySelectorAll("a.delete");
+
+            for(var i = 0; i < deletes.length; i++){
+                var deleteLink = deletes[i];
+
+                deleteLink.addEventListener('click', deleteToDo);
+            }
+        }
+
+        function setCheckboxListeners(){
+            var checkboxes = document.querySelectorAll('input[type= checkbox]');
+
+            for(var i = 0; i < checkboxes.length; i++){
+                var checkbox = checkboxes[i];
             
-            checkbox.addEventListener('click', checkboxClicked);
+                checkbox.addEventListener('click', checkboxClicked);
+            }
         }
 
         function checkboxClicked(clickEvent){
@@ -47,12 +81,21 @@
             }
         }
 
-        function createNewToDo(){
-            var newToDoText = document.getElementById("newToDoText").value;
-            var newToDoHtml = '<li><label><input type="checkbox">' + newToDoText +'</label></li>';
-            document.getElementById("todoList").innerHTML += newToDoHtml;
-            document.getElementById("newToDoText").value = '';
-            document.getElementById("newToDoText").focus();
+        function deleteToDo(clickEvent){
+            
+            var deleteThatWasClicked = clickEvent.target;
+            var toDoItem = deleteThatWasClicked.closest("li");
+            console.log(toDoItem.parentNode);
+            toDoItem.parentNode.removeChild(toDoItem);
         }
+
+        setCheckboxListeners();
+        setDeleteListeners();
+
+        document.getElementById('newToDoText').addEventListener('keyup', function(e){
+            if (e.keyCode == 13 ){
+                createNewToDo();
+            }
+        })
     </script>
 </html>
