@@ -1,10 +1,5 @@
 <html>
-<head>
-    <script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script>
-</head>
+
 <body>
     
 
@@ -40,7 +35,7 @@
     //start page functions
     function createNewToDo(){
         //var newToDoText = document.getElementById('newToDoText').value; //get our text from our input box
-        var newToDoText = $("#newToDoText").val();
+        var newToDoText = document.getElementById("newToDoText").value;
         
         if ( newToDoText == '' ){ //disable blank todos
             return;
@@ -48,22 +43,21 @@
         
         var newToDoLi = document.createElement('li'); //introduce a new element to the DOM
         newToDoLi.innerHTML = '<label><input type="checkbox">'+newToDoText+'</label> - <a href="#" class="delete">Delete</a>'; //set the inner content for the new element
-        $('#toDoList').append(newToDoLi); //append our new element to our list
+        document.getElementById('toDoList').append(newToDoLi); //append our new element to our list
         setCheckboxListeners(); //reset the listeners so our new box works
         setDeleteListeners();
         //reset the text to blank and focus
-        $('#newToDoText').value = '';
-        $('#newToDoText').focus();
+        document.getElementById('newToDoText').value = '';
+        document.getElementById('newToDoText').focus();
     }
 
     function setCheckboxListeners(){
-        /*
+        
         var checkboxes = document.querySelectorAll('input[type="checkbox"]');
         for ( var i = 0; i<checkboxes.length; i++ ){
             var checkbox = checkboxes[i];
             checkbox.addEventListener('click',checkboxClicked);
-        }*/
-        $('input[type="checkbox"]').on('click',checkboxClicked);
+        }
     }
     
     function checkboxClicked(clickEvent){
@@ -101,6 +95,9 @@
 
     document.getElementById('newToDoText').addEventListener('keyup',function(e){
         /*code goes here */ 
+        if ( e.keyCode == 13 ){
+            createNewToDo();
+        }
     });
     
 </script>

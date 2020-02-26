@@ -1,0 +1,81 @@
+<html>
+<head>
+    <script src="./jquery.js" language="javascript"></script>
+</head>
+<body>
+    <h1>To Dos</h1>
+    <ul id="toDoList">
+        <li>
+            <label>
+                <input type="checkbox" class="to-do-checkbox">
+                Take Out The Trash
+            </label>
+            - <a href="#" class="delete">Delete</a>
+        </li>
+        <li>
+            <label>
+                <input type="checkbox" class="to-do-checkbox">
+                Clean The Bathroom
+            </label>
+            - <a href="#" class="delete">Delete</a>
+        </li>
+        <li>
+            <label>
+                <input type="checkbox" class="to-do-checkbox">
+                Feed The cats
+            </label>
+            - <a href="#" class="delete">Delete</a>
+        </li>
+    </ul>
+    <input type="text" id="newToDoText">
+    <a href="#" onclick="createNewToDo()">+ Add</a>
+</body>
+
+
+<style>
+    .checked {
+        color: #CCC;
+        text-decoration: line-through;
+    }
+</style>
+
+<!-- This is our jquery implementation -->
+<script>
+    $().ready(function(){
+        setCheckboxListeners();
+        setDeleteListeners();
+
+        $("#newToDoText").on('keypress',function(e){
+            if( e.which == 13 ) {
+                createNewToDo();
+            }
+        });
+
+    });
+
+    function setCheckboxListeners(){
+        $(".to-do-checkbox").off('change').on('change',function(){
+            $(this).parents('li').toggleClass('checked');
+        });
+    }
+
+    function setDeleteListeners(){
+        $(".delete").off('change').on('click',function(){
+            $(this).parents('li').fadeOut(500,function(){
+                $(this).remove();
+            });
+        })
+    }
+
+    function createNewToDo(){
+        var newToDoText = $("#newToDoText").val();
+        if ( newToDoText == '' ){return;}
+        var newHtml = '<li><label><input type="checkbox" class="to-do-checkbox">'+newToDoText+'</label> - <a href="#" class="delete">Delete</a></li>'; //set the inner content for the new element
+        $("#toDoList").append(newHtml);
+        setCheckboxListeners();
+        setDeleteListeners();
+        $("#newToDoText").val('').focus()   ;
+    }
+</script>
+
+</html>
