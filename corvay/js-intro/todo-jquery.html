@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <link type="text/css" rel="stylesheet" href="main.css">
+        <script src="jquery.js"></script>
+    </head>
+    <body>
+        <h1>To do's</h1>
+        <ul id="todoList">
+            <li id="trash">
+                <label>
+                    <input type="checkbox" class="to-do-checkbox">
+                    Takeout the trash. - 
+                </label>
+                <a href="#" class="delete" >Delete</a>
+            </li>
+            <li id="bathroom">
+                <label>
+                    <input type="checkbox" class="to-do-checkbox">
+                    Clean the bathroom. - 
+                </label>
+                <a href="#" class="delete" >Delete</a>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox" class="to-do-checkbox">
+                    Feed the cats. - 
+                </label> 
+                <a href="#" class="delete" >Delete</a>
+            </li>           
+        </ul>
+        <input id="newToDoText" type="text">
+        <a href="#" onclick="createNewToDo()">+ADD</a>
+    </body>
+    <style>
+        .checked{
+            color: #CCC;
+            text-decoration: line-through;
+        }
+    </style>
+
+    <script> //Jquery version
+        $().ready(function(){
+            setCheckboxListeners();
+            setDeleteListeners();
+            $('#newToDoText').on('keypress', function(e){
+                if(e.which == 13){
+                    createNewToDo();
+                }
+        });
+
+        })
+        function setCheckboxListeners(){
+            $(".to-do-checkbox").off('change').on('change', function(){
+                $(this).parents('li').toggleClass('checked');
+            });
+        }
+        function setDeleteListeners(){
+            $('.delete').off('change').on('click', function(){
+                $(this).parent('li').fadeOut(500, function(){
+                    this.remove();
+                });
+            })
+        }
+        function createNewToDo(){
+            var newToDoText = $('#newToDoText').val();
+            if(newToDoText == ''){return};
+            var newHtml ='<li><label><input type="checkbox" class="to-do-checkbox">' + newToDoText + ' -</label> <a href="#" class="delete" >Delete</a></li>';//Set the inner content
+            $('#todoList').append(newHtml);
+            setCheckboxListeners();
+            setDeleteListeners();
+            $('#newToDoText').val('').focus();
+        }
+        
+    </script>
+
+   
+</html>
