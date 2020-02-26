@@ -10,41 +10,57 @@
                 <input type="checkbox">
                 Take Out The Trash
             </label>
+            - <a href="#" class="delete">Delete</a>
         </li>
         <li>
             <label>
                 <input type="checkbox">
                 Clean The Bathroom
             </label>
+            - <a href="#" class="delete">Delete</a>
         </li>
         <li>
             <label>
                 <input type="checkbox">
                 Feed The cats
             </label>
+            - <a href="#" class="delete">Delete</a>
         </li>
     </ul>
     <input type="text" id="newToDoText">
-    <a href="#" onclick="createNewTodo()">+ Add</a>
+    <a href="#" onclick="createNewToDo()">+ Add</a>
 </body>
 <script>
-    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
-    function createNewTodo(){
-        var newToDoText = document.getElementById('newToDoText').value;
-        var newToDoHtml = '<li><label><input type="checkbox">'+newToDoText+'</label></li>';   
-        document.getElementById('toDoList').innerHTML += newToDoHtml;
+    
+    //start page functions
+    function createNewToDo(){
+        //var newToDoText = document.getElementById('newToDoText').value; //get our text from our input box
+        var newToDoText = document.getElementById("newToDoText").value;
+        
+        if ( newToDoText == '' ){ //disable blank todos
+            return;
+        }
+        
+        var newToDoLi = document.createElement('li'); //introduce a new element to the DOM
+        newToDoLi.innerHTML = '<label><input type="checkbox">'+newToDoText+'</label> - <a href="#" class="delete">Delete</a>'; //set the inner content for the new element
+        document.getElementById('toDoList').append(newToDoLi); //append our new element to our list
+        setCheckboxListeners(); //reset the listeners so our new box works
+        setDeleteListeners();
+        //reset the text to blank and focus
         document.getElementById('newToDoText').value = '';
         document.getElementById('newToDoText').focus();
     }
 
-    for ( var i = 0; i<checkboxes.length; i++ ){
-        var checkbox = checkboxes[i];
-        checkbox.addEventListener('click',checkboxClicked);
+    function setCheckboxListeners(){
+        
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        for ( var i = 0; i<checkboxes.length; i++ ){
+            var checkbox = checkboxes[i];
+            checkbox.addEventListener('click',checkboxClicked);
+        }
     }
     
     function checkboxClicked(clickEvent){
-        //console.log(clickEvent);
         var checkboxThatWasClicked = clickEvent.target //get the "target" of the event (will be ourcheckbox)
         var toDoItemLi = checkboxThatWasClicked.closest('li'); //we want the closest parent <li> because that's what we're going to style
         if (checkboxThatWasClicked.checked ){ //if our checkbox was checked, style appropriately
@@ -54,9 +70,35 @@
             toDoItemLi.style.color = '';
             toDoItemLi.style.textDecoration = '';
         }
-
     }
     
+    function setDeleteListeners(){
+        var deletes = document.querySelectorAll('a.delete');
+        for ( var i = 0; i<deletes.length; i++){
+            var deleteLink = deletes[i];
+            deleteLink.addEventListener('click',deleteToDo);
+        }
+    }
+    
+    function deleteToDo(clickEvent){
+        var deleteThatWasClicked = clickEvent.target //get the "target" of the event (will be ourcheckbox)
+        var toDoItemLi = deleteThatWasClicked.closest('li'); //we want the closest parent <li> because that's what we're going to style
+        toDoItemLi.parentNode.removeChild(toDoItemLi);
+    }
+    //end page functions
+
+
+    //let's get the page ready
+    setCheckboxListeners();
+    setDeleteListeners();
+    
+
+    document.getElementById('newToDoText').addEventListener('keyup',function(e){
+        /*code goes here */ 
+        if ( e.keyCode == 13 ){
+            createNewToDo();
+        }
+    });
     
 </script>
 
