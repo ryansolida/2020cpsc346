@@ -1,0 +1,62 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+
+<body>
+    <div id="app">
+        <h1>To Dos</h1>
+        <ul id="toDoList">
+
+            <li v-for="(toDo,index) in toDos">
+                <label>
+                    <input type="checkbox" class="to-do-checkbox">
+                    <span>{{toDo.text}}</span>
+                </label>
+                <a href="#" class="delete btn" @click="deleteToDo(index)">Delete</a>
+            </li>
+        </ul>
+        <input type="text" id="newToDoText" v-model="newToDoText" placeholder="New To Do Here">
+        <a href="#" @click="createNewToDo" class="btn">+ Add</a>
+    </div>
+</body>
+
+
+<style>
+    .checked {
+        color: #CCC;
+        text-decoration: line-through;
+    }
+</style>
+
+<!-- This is our jquery implementation -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            newToDoText: '',
+            toDos: [{
+                text: 'Take Out The Trash',
+                completed: false
+            }, {
+                text: 'Clean The Bathroom',
+                completed: false
+            }, {
+                text: 'Feed The Cats',
+                completed: true
+            }]
+        },
+        methods: {
+            createNewToDo() {
+                alert("CREATE TO DO HERE");
+            },
+            deleteToDo(index) {
+                alert("DELETE TO DO " + index)
+            }
+        }
+    })
+</script>
+
+</html>
