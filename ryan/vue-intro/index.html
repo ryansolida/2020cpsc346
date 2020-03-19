@@ -10,7 +10,7 @@
         <h1>To Dos</h1>
         <ul id="toDoList">
 
-            <li v-for="(toDo,index) in toDos">
+            <li v-for="(toDo,index) in toDos" :class="toDo.completed?'checked':''">
                 <label>
                     <input type="checkbox" class="to-do-checkbox">
                     <span>{{toDo.text}}</span>
