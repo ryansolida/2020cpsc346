@@ -1,34 +1,37 @@
 <html>
 <head>
     <script src="./jquery.js" language="javascript"></script>
+    <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 <body>
     <h1>To Dos</h1>
+
     <ul id="toDoList">
-        <li>
+        
+        <!-- <li>
             <label>
                 <input type="checkbox" class="to-do-checkbox">
-                Take Out The Trash
+                <span>Take Out The Trash</span>
             </label>
-            - <a href="#" class="delete">Delete</a>
+            <a href="#" class="delete btn">Delete</a>
         </li>
         <li>
             <label>
                 <input type="checkbox" class="to-do-checkbox">
-                Clean The Bathroom
+                <span>Clean The Bathroom</span>
             </label>
-            - <a href="#" class="delete">Delete</a>
+            <a href="#" class="delete btn">Delete</a>
         </li>
         <li>
             <label>
                 <input type="checkbox" class="to-do-checkbox">
-                Feed The cats
+                <span>Feed The cats</span>
             </label>
-            - <a href="#" class="delete">Delete</a>
-        </li>
+            <a href="#" class="delete btn">Delete</a>
+        </li> -->
     </ul>
-    <input type="text" id="newToDoText">
-    <a href="#" onclick="createNewToDo()">+ Add</a>
+    <input type="text" id="newToDoText" placeholder="New To Do Here">
+    <a href="#" onclick="createNewToDo()" class="btn">+ Add</a>
 </body>
 
 
@@ -42,27 +45,34 @@
 <!-- This is our jquery implementation -->
 <script>
     $().ready(function(){
-        setCheckboxListeners();
-        setDeleteListeners();
-
+        
+        $.get('https://maloneclasstest.test/todos',function(todos){
+            for ( var i=0; i<todos.length; i++){
+                $("#toDoList").append("<li><label><input type=\"checkbox\" class=\"to-do-checkbox\"><span>"+todos[i].text+"</span></label><a href=\"#\" class=\"delete btn\">Delete</a></li>");
+            }
+        })
+       
         $("#newToDoText").on('keypress',function(e){
             if( e.which == 13 ) {
                 createNewToDo();
             }
         });
 
+        setCheckboxListeners();
+        setDeleteListeners();
+
     });
+
 
     function setCheckboxListeners(){
         $(".to-do-checkbox").off('change').on('change',function(){
-            $(this).parents('li').toggleClass('checked');
+            $(this).parents('li').find('span').toggleClass('checked');
         });
         
-        //Removed fancy stuff
     }
 
     function setDeleteListeners(){
-        $(".delete").off('change').on('click',function(){
+        $(".delete").off('click').on('click',function(){
             $(this).parents('li').fadeOut(500,function(){
                 $(this).remove();
             });
@@ -72,11 +82,13 @@
     function createNewToDo(){
         var newToDoText = $("#newToDoText").val();
         if ( newToDoText == '' ){return;}
-        var newHtml = '<li><label><input type="checkbox" class="to-do-checkbox">'+newToDoText+'</label> - <a href="#" class="delete">Delete</a></li>'; //set the inner content for the new element
+    
+        var newHtml = '<li><label><input type="checkbox" class="to-do-checkbox">'+newToDoText+'</label><a href="#" class="delete btn">Delete</a></li>'; //set the inner content for the new element
         $("#toDoList").append(newHtml);
         setCheckboxListeners();
         setDeleteListeners();
-        $("#newToDoText").val('').focus()   ;
+        $("#newToDoText").val('').focus();
+
     }
 </script>
 
