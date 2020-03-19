@@ -11,21 +11,21 @@
         <!-- <li>
             <label>
                 <input type="checkbox" class="to-do-checkbox">
-                <span>Take Out The Trash</span>
+                Take Out The Trash
             </label>
             <a href="#" class="delete btn">Delete</a>
         </li>
         <li>
             <label>
                 <input type="checkbox" class="to-do-checkbox">
-                <span>Clean The Bathroom</span>
+                Clean The Bathroom
             </label>
             <a href="#" class="delete btn">Delete</a>
         </li>
         <li>
             <label>
                 <input type="checkbox" class="to-do-checkbox">
-                <span>Feed The cats</span>
+                Feed The cats
             </label>
             <a href="#" class="delete btn">Delete</a>
         </li> -->
@@ -46,29 +46,38 @@
 <script>
     $().ready(function(){
         
-        $.get('https://maloneclasstest.test/todos',function(todos){
-            for ( var i=0; i<todos.length; i++){
-                $("#toDoList").append("<li><label><input type=\"checkbox\" class=\"to-do-checkbox\"><span>"+todos[i].text+"</span></label><a href=\"#\" class=\"delete btn\">Delete</a></li>");
-            }
-        })
-       
+
+        $.get("https://maloneclass.test/ryan/js-intro/todostore.php",function(response){
+            renderToDos(response);
+        });
+
         $("#newToDoText").on('keypress',function(e){
             if( e.which == 13 ) {
                 createNewToDo();
             }
         });
 
-        setCheckboxListeners();
-        setDeleteListeners();
-
     });
 
+    function renderToDos(jsonString){
+        $("#toDoList").html('');
+        var data = JSON.parse(jsonString);
+        for ( var i in data ){
+            var toDo = data[i];
+            console.log(toDo);
+            var newHtml = '<li><label><input type="checkbox" class="to-do-checkbox">'+toDo.todo+'</label><a href="#" class="delete btn">Delete</a></li>'; //set the inner content for the new element
+            $("#toDoList").append(newHtml);
+        }
+        setCheckboxListeners();
+        setDeleteListeners();
+    }
 
     function setCheckboxListeners(){
         $(".to-do-checkbox").off('change').on('change',function(){
-            $(this).parents('li').find('span').toggleClass('checked');
+            $(this).parents('li').toggleClass('checked');
         });
         
+        //Removed fancy stuff
     }
 
     function setDeleteListeners(){
@@ -83,12 +92,14 @@
         var newToDoText = $("#newToDoText").val();
         if ( newToDoText == '' ){return;}
     
-        var newHtml = '<li><label><input type="checkbox" class="to-do-checkbox">'+newToDoText+'</label><a href="#" class="delete btn">Delete</a></li>'; //set the inner content for the new element
-        $("#toDoList").append(newHtml);
-        setCheckboxListeners();
-        setDeleteListeners();
-        $("#newToDoText").val('').focus();
+        $.post("https://maloneclass.test/ryan/js-intro/todostore.php",{
+            todo_text: newToDoText
+        },function(response){
 
+            renderToDos(response);
+            $("#newToDoText").val('').focus();
+
+        })
     }
 </script>
 
