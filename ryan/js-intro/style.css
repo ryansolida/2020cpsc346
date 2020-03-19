@@ -1,0 +1,7 @@
+.checked {
+    color: #CCC;
+    text-decoration: line-through;
+}
+li{
+    color: green;
+}
