@@ -1,0 +1,64 @@
+* {
+    font-family: sans-serif
+}
+
+body{
+    width: 65%;
+    margin: 0px auto;
+}
+
+
+#toDoList{
+    list-style-type: none;
+    padding: 0;
+}
+
+#toDoList li{
+    margin: 10px 0px;
+    background-color: #DDD;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid rgba(255,255,255,.5);
+    box-shadow: 0px 0px 5px #CCC;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.btn{
+    font-size: 70%;
+    background-color: #555;
+    color: #FFF;
+    padding: 3px 8px;
+    text-decoration: none;
+    border-radius: 3px;
+    border: 1px solid #FFF;
+    text-transform: uppercase;
+    text-shadow: 0px 1px 1px #000;
+    transition: .25s all;
+}
+
+.btn:hover{
+    background-color: #333;
+    box-shadow: 0px 0px 3px #777;
+}
+
+#newToDoText{
+    font-size: 110%;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid #DDD;
+    background: linear-gradient(#EEE, #FFF);
+    transition: .25s all;
+}
+
+#newToDoText:focus{
+    outline: none;
+    box-shadow: 0px 0px 8px #AAA;
+}
+
+
+.checked {
+    color: #CCC;
+    text-decoration: line-through;
+}
