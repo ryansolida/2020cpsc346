@@ -1,0 +1,69 @@
+<!-- IMPOTANT..... READ THIS LINK TO SEE WHAT IN THE HECK I'M DOING https://vuejs.org/v2/guide/ -->
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+
+<body>
+    <div id="app">
+        <h1>To Dos</h1>
+        <ul id="toDoList">
+
+            <li v-for="(toDo,index) in toDos" :class="toDo.completed?'checked':''">
+                <label>
+                    <input type="checkbox" class="to-do-checkbox" @keyup.enter="createNewToDo">
+                    <span>{{toDo.text}}</span>
+                </label>
+                <a href="#" class="delete btn" @click="deleteToDo(index)">Delete</a>
+            </li>
+        </ul>
+        <input type="text" id="newToDoText" v-model="newToDoText" placeholder="New To Do Here">
+        <a href="#" @click="createNewToDo" class="btn">+ Add</a>
+    </div>
+</body>
+
+
+<style>
+    .checked {
+        color: #CCC;
+        text-decoration: line-through;
+    }
+</style>
+
+<!-- This is our jquery implementation -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            newToDoText: '',
+            toDos: [
+                {
+                text: 'Take Out The Trash',
+                completed: false
+            }, {
+                text: 'Clean The Bathroom',
+                completed: false
+            }, {
+                text: 'Feed The Cats',
+                completed: false
+            }]
+        },
+        methods: {
+            createNewToDo() {
+                this.toDos.push({
+                    text: this.newToDoText,
+                    completed: false
+                })
+                this.newToDoText = "";
+            },
+            deleteToDo(index) {
+                this.toDos.splice(index, 1);
+                console.log(this.toDos);
+            }
+        }
+    })
+</script>
+
+</html>
