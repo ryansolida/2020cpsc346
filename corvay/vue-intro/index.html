@@ -12,13 +12,13 @@
 
             <li v-for="(toDo,index) in toDos" :class="toDo.completed?'checked':''">
                 <label>
-                    <input type="checkbox" class="to-do-checkbox">
+                    <input type="checkbox" class="to-do-checkbox" v-model="toDo.completed">
                     <span>{{toDo.text}}</span>
                 </label>
                 <a href="#" class="delete btn" @click="deleteToDo(index)">Delete</a>
             </li>
         </ul>
-        <input type="text" id="newToDoText" v-model="newToDoText" placeholder="New To Do Here">
+        <input v-on:keyup.13 = "createNewToDo" type="text" id="newToDoText" v-model="newToDoText" placeholder="New To Do Here">
         <a href="#" @click="createNewToDo" class="btn">+ Add</a>
     </div>
 </body>
@@ -52,6 +52,10 @@
         },
         methods: {
             createNewToDo() {
+                if(this.newToDoText == ""){
+                    return;
+                }
+
                 this.toDos.push({
                     text: this.newToDoText,
                     completed: false
