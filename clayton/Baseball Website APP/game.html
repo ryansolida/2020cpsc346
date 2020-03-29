@@ -1,0 +1,176 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+</head>
+<body>
+    <div id="pageWrapper">
+        <div id="headerContainer">
+            <div id="logoContainer">
+                <img src="Stopwatch Baseball.jpg">
+            </div>
+            <div id="navContainer">
+                <ul id="nav">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="game.html">Game</a></li>
+                    <li><a href="help.html">Help</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="bodyWrapper">
+            <div id="scoreBoard">
+                <h2>ScoreBoard</h2>
+                <table>
+                    <tr>
+                        <th id="firstbox">Innings</th>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>6</td>
+                        <td>7</td>
+                        <td>8</td>
+                        <td>9</td>
+                        <td id="Runs">Runs</td>
+                        <td id="hits">Hits</td>
+                        <td id="errors">Errors</td>
+                    </tr>
+                    <tr>
+                        <th id="firstbox">Away</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td id="Runs"></td>
+                        <td id="hits"></td>
+                        <td id="errors"></td>
+                    </tr>
+                    <tr>
+                        <th id="firstbox">Home</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td id="Runs"></td>
+                        <td id="hits"></td>
+                        <td id="errors"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="clock">
+            <div>
+                <div class="time">{{ time }}</div>
+            </div>
+            <div class="btn-container">
+                <a href="#" onclick="return false" id="start">Start</a>
+                <a href="#" onclick="return false" id="stop">Stop</a>
+                <a href="#" onclick="return false" id="reset">Reset</a>
+                <p id="demo"></p>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+
+var clock = new Vue({
+  el: '#clock',
+  data: {
+    time: '00:00.000'
+  }
+});
+
+var timeBegan = null
+, timeStopped = null
+, stoppedDuration = 0
+, started = null
+, running = false;
+
+
+document.getElementById("start").addEventListener("click", start);
+document.getElementById("stop").addEventListener("click", stop);
+document.getElementById("reset").addEventListener("click", reset);
+
+function start() {
+  if(running) return;
+  
+  if (timeBegan === null) {
+    reset();
+    timeBegan = new Date();
+  }
+
+  if (timeStopped !== null) {
+    stoppedDuration += (new Date() - timeStopped);
+  }
+
+  started = setInterval(clockRunning, 10);	
+  running = true;
+}
+
+function stop() {
+  running = false;
+  timeStopped = new Date();
+  
+//   if (base == 0.970 > 0.980, 1.03 > 1.04 ) {
+//       greeting = "Single";
+//   } else if (base == 0.980 > 0.990, 1.020 > 1.030 ) {
+//       greeting = "Double";
+//   } else if (base == 0.990 > 1.000, 1.010 > 1.020 ) {
+//       greeting = "Triple";
+//   } else if (base == 1.000 > 1.010) {
+//       greeting = "Homerun";
+//   } else {
+//     greeting = "Out"
+//   }
+//   document.getElementById("demo").innerHTML = greeting;
+  clearInterval(started);
+}
+
+function reset() {
+  running = false;
+  clearInterval(started)
+  stoppedDuration = 0;
+  timeBegan = null;
+  timeStopped = null;
+  clock.time = "00:00.00";
+}
+
+function clockRunning(){
+  var currentTime = new Date()
+  , timeElapsed = new Date(currentTime - timeBegan - stoppedDuration)
+  , min = timeElapsed.getUTCMinutes()
+  , sec = timeElapsed.getUTCSeconds()
+  , ms = timeElapsed.getUTCMilliseconds();
+
+  clock.time = 
+    zeroPrefix(min, 2) + ":" + 
+    zeroPrefix(sec, 2) + "." + 
+    zeroPrefix(ms, 3);
+};
+
+function zeroPrefix(num, digit) {
+  var zero = '';
+  for(var i = 0; i < digit; i++) {
+    zero += '0';
+  }
+  return (zero + num).slice(-digit);
+}
+
+</script>
+
+
+
+</html>

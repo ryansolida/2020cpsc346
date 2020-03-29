@@ -1,0 +1,128 @@
+*{
+    font-family: sans-serif;
+}
+
+body{
+    width: 65%;
+    margin: 0px auto;
+}
+
+#pageWrapper{
+    width: 1000px;
+    margin: 0 auto;
+}
+
+#bodyWarpper{
+    border-top: 6px solid #ff9c0f;
+
+}
+
+#headerContainer{
+    display: flex;
+}
+
+#logoContainer{
+    flex: 1;
+}
+
+#navContainer{
+    flex: 4;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* Fixes the navigation spot by cleaning it up */
+#nav{
+    font-size: 16px;
+    margin: 0;
+    list-style: none;
+    padding: 0;
+}
+/* This re aligns the navigation's in a order due to the li list */
+#nav li{
+    display: inline-block;
+}
+/* This adds a nice texture to the naviagtion (Button) */
+#nav li a{
+    padding: 15px;
+    background-color: #aaa;
+    margin-left: 15px;
+    color: #000;
+}
+
+#main{
+    flex-grow: 4;
+    width: 1000px;
+    align-items: center;
+}
+
+#scoreBoard{
+    width: 1000px;
+    height: 200px;
+    background-color: #aaa;
+}
+
+table{
+    width: 995px;
+    height: 150px;
+    margin: auto;
+}
+
+#table, h2{
+    text-align: center;
+    height: 5%;
+}
+
+#table, th, td{
+    border: 2px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    padding: 5px;
+    font-weight: bold;
+    font-size: larger;
+}
+
+/* Size of boxes in scoreboard */
+#firstbox{
+    width: 150;
+}
+#runs, #hits, #errors{
+    width: 75;
+}
+
+
+.btn-container{ 
+    height: 100px;
+    width: 1000px;
+    text-align: center;
+}
+
+#start, #stop, #reset{
+    font-size: 3em;
+    background-color: #555;
+    color: #FFF;
+    padding: 10px 20px;
+    margin: 10px;
+    text-decoration: none;
+    border-radius: 3px;
+    border: 2px solid #FFF;
+    text-transform: uppercase;
+    text-shadow: 0px 1px 1px #000; 
+
+}
+
+.time{
+    font-size: 6em;
+    text-align: center;
+    background-color: #555;
+    color: #FFF;
+    padding: 10px 20px;
+    margin: 10px;
+    text-decoration: none;
+    border-radius: 3px;
+    border: 2px solid #FFF;
+    text-transform: uppercase;
+    text-shadow: 0px 1px 1px #000;
+}
+
