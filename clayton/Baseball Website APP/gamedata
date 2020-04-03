@@ -1,0 +1,15 @@
+Teams
+    Innings
+        Runs Scored
+    Hits
+
+State of Base Runners
+    First - 1
+    Second base - 2
+    Third base - 3
+    Home - 4 (if runner hits or exceeds base 4, it's a run)
+
+Current Inning (top or bottom) (9 and home team bats last inning even when winning)
+Current Out (when we hit 3, we clear the runnings and move the inning)
+
+
