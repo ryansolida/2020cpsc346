@@ -63,8 +63,7 @@
                 <div class="btn-container">
                     <a href="javascript:;" @click="startTimer" id="start">Start</a>
                     <a href="javascript:;" @click="stopTimer" id="stop">Stop</a>
-                    <a href="javascript:;" onclick="return false" id="reset">Reset</a>
-                    <p id="demo"></p>
+                    <a href="javascript:;" @click="resetTimer" id="reset">Reset</a>
                 </div>
             </div>
         </div>
@@ -91,11 +90,13 @@
                         visitor: 0
                     }
                 },
+                // This is when the game starts
                 baseRunners: [],
                 currentInning: 1,
                 currentOuts: 0,
                 currentlyBatting: 'visitor' //home|visitor
             },
+            // This is the clock settings when it's at zero
             clockData: {
                 time: "00:00.00",
                 timeBegan: null,
@@ -129,7 +130,6 @@
                     this.changeInning();
                 }
 
-
                 for (var i in this.gameState.baseRunners) {
                     this.gameState.baseRunners[i] += result;
                 }
@@ -139,10 +139,10 @@
 
                 //check for runs
                 for (var i in this.gameState.baseRunners) {
-                    if (this.gameState.baseRunners[i] == 4) {
+                    if (this.gameState.baseRunners[i] >= 4) { //Added the >= 4 this means that anything for 4 bases equals a run
                         //TODO figure out how to get the runners who scored out of our array
-                        //TODO make sure anyone OVER 4 scores
                         this.registerRun();
+                        this.deleteRunner();
                     }
                 }
 
@@ -150,7 +150,14 @@
             registerRun: function() {
                 alert("RUN SCORED");
                 this.gameState.runsPerInning[this.gameState.currentInning][this.gameState.currentlyBatting] += 1;
+            
             },
+            deleteRunner: function() {
+                if (this.gameState.baseRunners[i] >= 4 ) {
+                    this.gameState.baseRunners = empty();
+                }
+            },
+
             changeInning() {
                 if (this.gameState.currentlyBatting == 'visitor') {
                     this.gameState.currentlyBatting = 'home';
