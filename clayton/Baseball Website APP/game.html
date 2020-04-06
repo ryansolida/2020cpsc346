@@ -39,18 +39,18 @@
                             <td v-for="(inning,inningNumber) in gameState.runsPerInning">
                                 {{inning.visitor}}
                             </td>
-                            <td id="Runs"></td>
-                            <td id="hits"></td>
+                            <td id="Runs">{{visitorScore}}</td>
+                            <td id="hits">{{awayTotalHits}}</td>
                             <td id="errors"></td>
                         </tr>
                         <tr>
                             <th id="firstbox">Home</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td v-for="(inning,inningNumber) in gameState.runsPerInning">
+                                {{inning.home}}
+                            </td>
 
                             <td id="Runs">{{homeScore}}</td>
-                            <td id="hits"></td>
+                            <td id="hits">{{homeTotalHits}}</td>
                             <td id="errors"></td>
                         </tr>
                     </table>
@@ -110,12 +110,22 @@
         computed: {
             homeScore() {
                 //TODO: calculate actual homescore
-                return 15
+                return 0
+            },
+            visitorScore() {
+                return 0
+            },
+            awayTotalHits() {
+                return 0
+            },
+            homeTotalHits() {
+                return 0
             }
+
         },
         mounted() {
             //this is for testing
-            this.gameState.baseRunners = [1, 2];
+            this.gameState.baseRunners = [0];
             this.registerAtBat(2);
         },
         methods: {
@@ -142,7 +152,7 @@
                     if (this.gameState.baseRunners[i] >= 4) { //Added the >= 4 this means that anything for 4 bases equals a run
                         //TODO figure out how to get the runners who scored out of our array
                         this.registerRun();
-                        this.deleteRunner();
+                        
                     }
                 }
 
@@ -152,12 +162,7 @@
                 this.gameState.runsPerInning[this.gameState.currentInning][this.gameState.currentlyBatting] += 1;
             
             },
-            deleteRunner: function() {
-                if (this.gameState.baseRunners[i] >= 4 ) {
-                    this.gameState.baseRunners = empty();
-                }
-            },
-
+            
             changeInning() {
                 if (this.gameState.currentlyBatting == 'visitor') {
                     this.gameState.currentlyBatting = 'home';
@@ -168,6 +173,7 @@
 
                 //RESET STATE FOR INNING
                 this.gameState.currentOuts = 0;
+                this.gameState.baseRunners = []
                 //TODO reset base runners
 
                 //TODO what do we do at the end of the game?
