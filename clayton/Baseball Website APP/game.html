@@ -32,7 +32,7 @@
                             </td>
                             <td id="Runs">Runs</td>
                             <td id="hits">Hits</td>
-                            <td id="errors">Errors</td>
+                            <td id="errors">Outs</td>
                         </tr>
                         <tr>
                             <th id="firstbox">Away</th>
@@ -41,7 +41,7 @@
                             </td>
                             <td id="Runs">{{visitorScore}}</td>
                             <td id="hits">{{awayTotalHits}}</td>
-                            <td id="Outs">{{awayOuts}}</td>
+                            <td id="Outs">{{outsPerInning}}</td>
                         </tr>
                         <tr>
                             <th id="firstbox">Home</th>
@@ -51,7 +51,6 @@
 
                             <td id="Runs">{{homeScore}}</td>
                             <td id="hits">{{homeTotalHits}}</td>
-                            <td id="Outs">{{homeOuts}}</td>
                         </tr>
                     </table>
                 </div>
@@ -109,11 +108,10 @@
         },
         computed: {
             homeScore() {
-                
                 return 0;
             },
             visitorScore() {
-                return 0
+                return 0;
             },
             awayTotalHits() {
                 return 0
@@ -121,12 +119,11 @@
             homeTotalHits() {
                 return 0
             },
-            awayOuts() {
-                return 0
+            outsPerInning() {
+                return this.gameState.currentOuts;
             },
-            homeOuts() {
-                return 0
-            },
+            
+
             
 
         },
