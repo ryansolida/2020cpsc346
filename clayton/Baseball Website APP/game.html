@@ -41,7 +41,7 @@
                             </td>
                             <td id="Runs">{{visitorScore}}</td>
                             <td id="hits">{{awayTotalHits}}</td>
-                            <td id="errors"></td>
+                            <td id="Outs">{{awayOuts}}</td>
                         </tr>
                         <tr>
                             <th id="firstbox">Home</th>
@@ -51,7 +51,7 @@
 
                             <td id="Runs">{{homeScore}}</td>
                             <td id="hits">{{homeTotalHits}}</td>
-                            <td id="errors"></td>
+                            <td id="Outs">{{homeOuts}}</td>
                         </tr>
                     </table>
                 </div>
@@ -109,8 +109,8 @@
         },
         computed: {
             homeScore() {
-                //TODO: calculate actual homescore
-                return 0
+                
+                return 0;
             },
             visitorScore() {
                 return 0
@@ -120,26 +120,32 @@
             },
             homeTotalHits() {
                 return 0
-            }
+            },
+            awayOuts() {
+                return 0
+            },
+            homeOuts() {
+                return 0
+            },
+            
 
         },
         mounted() {
             //this is for testing
-            this.gameState.baseRunners = [0];
-            this.registerAtBat(2);
+            this.gameState.baseRunners = [];
+            this.registerAtBat(0);
         },
         methods: {
             registerAtBat: function(result) {
 
-                //TODOs what do we do with an out?
                 if (result == 0) {
-                    this.gameState.currentOuts++;
+                    this.gameState.currentOuts++; // FIXS, this makes it so that there is 1 out to start with
                 }
 
                 if (this.gameState.currentOuts == 3) {
                     this.changeInning();
                 }
-
+                
                 for (var i in this.gameState.baseRunners) {
                     this.gameState.baseRunners[i] += result;
                 }
@@ -150,15 +156,19 @@
                 //check for runs
                 for (var i in this.gameState.baseRunners) {
                     if (this.gameState.baseRunners[i] >= 4) { //Added the >= 4 this means that anything for 4 bases equals a run
-                        //TODO figure out how to get the runners who scored out of our array
                         this.registerRun();
-                        
                     }
                 }
-
+                //This clears out the Array so that any baseRunners over 4 are moved out and count as a score.
+                    var underBaseFour = [];
+                        for ( var i in this.gameState.baseRunners){
+                            if (this.gameState.baseRunners[i] < 4 ){
+                            underBaseFour.push(this.gameState.baseRunners[i]);
+                            }   
+                        }
+                        this.gameState.baseRunners = underBaseFour;
             },
             registerRun: function() {
-                alert("RUN SCORED");
                 this.gameState.runsPerInning[this.gameState.currentInning][this.gameState.currentlyBatting] += 1;
             
             },
