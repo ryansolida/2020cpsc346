@@ -39,7 +39,9 @@
                             <td v-for="(inning,inningNumber) in gameState.runsPerInning">
                                 {{inning.visitor}}
                             </td>
-                            <td id="Runs">{{visitorScore}}</td>
+                            <td id="runs" v-for="(inning,runs) in gameState.totalRuns">
+                                {{inning.visitor}}
+                            </td>
                             <td id="hits">{{awayTotalHits}}</td>
                             <td id="Outs">{{outsPerInning}}</td>
                         </tr>
@@ -49,7 +51,9 @@
                                 {{inning.home}}
                             </td>
 
-                            <td id="Runs">{{homeScore}}</td>
+                            <td id="Runs" v-for="(inning) in gameState.runsPerInning">
+                                {{inning.home}}
+                            </td>
                             <td id="hits">{{homeTotalHits}}</td>
                         </tr>
                     </table>
@@ -111,7 +115,7 @@
                 return 0;
             },
             visitorScore() {
-                return 0;
+                return totalRuns;
             },
             awayTotalHits() {
                 return 0
@@ -169,7 +173,6 @@
                 this.gameState.runsPerInning[this.gameState.currentInning][this.gameState.currentlyBatting] += 1;
             
             },
-            
             changeInning() {
                 if (this.gameState.currentlyBatting == 'visitor') {
                     this.gameState.currentlyBatting = 'home';
