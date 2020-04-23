@@ -215,15 +215,15 @@
                 this.clockData.running = false;
                 var result;
                 if (clockMs == 97 || clockMs == 3) {
-                    result = 1;
+                    result = 1; //this is a single
                 } else if (clockMs == 98 || clockMs == 2) {
-                    result = 2;
+                    result = 2; // this is a double
                 } else if (clockMs == 99 || clockMs == 1) {
-                    result = 3;
+                    result = 3; // this is a triple
                 } else if (clockMs == 0) {
-                    result = 4;
+                    result = 4; //this is a homerun
                 } else {
-                    result = 0;
+                    result = 0; //This is an out
                 }
 
                 this.clockData.timeStopped = new Date();
@@ -232,6 +232,7 @@
 
                 var self = this;
                 setTimeout(function() {
+                    //register the at bat and pass it the number of bases advanced
                     self.registerAtBat(result);
                 }, 10)
 
