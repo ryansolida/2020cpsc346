@@ -21,6 +21,17 @@
                 </div>
             </div>
             {{gameState}}
+
+            <h2>
+                {{topOrBottom}} of the {{gameState.currentInning}}
+            </h2>
+            <h3 style="text-align: center">
+                {{gameState.currentOuts}} Outs
+            </h3>
+            <h3 style="text-align: center">
+                Runners on {{gameState.baseRunners}}
+            </h3>
+
             <div id="bodyWrapper">
                 <div id="scoreBoard">
                     <h2>ScoreBoard</h2>
@@ -32,18 +43,16 @@
                             </td>
                             <td id="Runs">Runs</td>
                             <td id="hits">Hits</td>
-                            <td id="errors">Outs</td>
                         </tr>
                         <tr>
                             <th id="firstbox">Away</th>
                             <td v-for="(inning,inningNumber) in gameState.runsPerInning">
                                 {{inning.visitor}}
                             </td>
-                            <td id="runs" v-for="(inning,runs) in gameState.totalRuns">
-                                {{inning.visitor}}
+                            <td>
+
                             </td>
                             <td id="hits">{{awayTotalHits}}</td>
-                            <td id="Outs">{{outsPerInning}}</td>
                         </tr>
                         <tr>
                             <th id="firstbox">Home</th>
@@ -51,8 +60,8 @@
                                 {{inning.home}}
                             </td>
 
-                            <td id="Runs" v-for="(inning) in gameState.runsPerInning">
-                                {{inning.home}}
+                            <td>
+                                <!-- {{inning.home}} -->
                             </td>
                             <td id="hits">{{homeTotalHits}}</td>
                         </tr>
@@ -75,6 +84,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
+    const sleep = (milliseconds) => {
+        return new Promise(resolve => setTimeout(resolve, milliseconds))
+    }
     var clock = new Vue({
         el: '#vueApp',
         data: {
@@ -126,32 +138,47 @@
             outsPerInning() {
                 return this.gameState.currentOuts;
             },
-            
-
-            
-
+            topOrBottom() {
+                if (this.gameState.currentlyBatting == 'visitor') {
+                    return 'Top';
+                } else {
+                    return 'Bottom'
+                }
+            }
         },
         mounted() {
-            //this is for testing
-            this.gameState.baseRunners = [];
-            this.registerAtBat(0);
+            this.fakeGame();
         },
         methods: {
-            registerAtBat: function(result) {
+            registerAtBat: function(basesAdvanced) { //this happens AFTER the at bat when we know how much to advance
 
-                if (result == 0) {
+
+                //1. If it's an out, we add an out
+                //2. if we now have 3 outs, we change the inning
+                //3. We advance all the base runners to their new bases
+                //4. We put the batter on base
+
+                if (basesAdvanced == 0) { //that's an out
                     this.gameState.currentOuts++; // FIXS, this makes it so that there is 1 out to start with
+
+                    if (this.gameState.currentOuts == 3) { //this is 3 outs so we're changing innings
+                        this.changeInning();
+                    }
+
+                    return; //IF THIS AN OUT DON'T GO ANY FURTHER IN THIS FUNCTION
+
                 }
 
-                if (this.gameState.currentOuts == 3) {
-                    this.changeInning();
-                }
-                
-                for (var i in this.gameState.baseRunners) {
-                    this.gameState.baseRunners[i] += result;
+
+                console.log("CURRENT BASE RUNNERS: " + this.gameState.baseRunners.length);
+                for (var i in this.gameState.baseRunners) { //for everyone already on base
+                    var currentBaseofThisRunner = this.gameState.baseRunners[i]
+                    currentBaseofThisRunner = currentBaseofThisRunner + basesAdvanced; //advance them by our current hit
+                    this.gameState.baseRunners[i] = currentBaseofThisRunner; //update the runner's base with his new base
                 }
 
-                this.gameState.baseRunners.push(result); //our new batter gets on base
+
+                this.gameState.baseRunners.push(basesAdvanced); //add our new base runner
 
 
                 //check for runs
@@ -160,18 +187,20 @@
                         this.registerRun();
                     }
                 }
+
                 //This clears out the Array so that any baseRunners over 4 are moved out and count as a score.
-                    var underBaseFour = [];
-                        for ( var i in this.gameState.baseRunners){
-                            if (this.gameState.baseRunners[i] < 4 ){
-                            underBaseFour.push(this.gameState.baseRunners[i]);
-                            }   
-                        }
-                        this.gameState.baseRunners = underBaseFour;
+                var underBaseFour = [];
+                for (var i in this.gameState.baseRunners) {
+                    if (this.gameState.baseRunners[i] < 4) {
+                        underBaseFour.push(this.gameState.baseRunners[i]);
+                    }
+                }
+                this.gameState.baseRunners = underBaseFour;
+
             },
             registerRun: function() {
                 this.gameState.runsPerInning[this.gameState.currentInning][this.gameState.currentlyBatting] += 1;
-            
+
             },
             changeInning() {
                 if (this.gameState.currentlyBatting == 'visitor') {
@@ -184,7 +213,7 @@
                 //RESET STATE FOR INNING
                 this.gameState.currentOuts = 0;
                 this.gameState.baseRunners = []
-                //TODO reset base runners
+                    //TODO reset base runners
 
                 //TODO what do we do at the end of the game?
 
@@ -213,26 +242,28 @@
 
             stopTimer: function() {
                 this.clockData.running = false;
-                var result;
+                var basesAdvanced;
                 if (clockMs == 97 || clockMs == 3) {
-                    result = 1;
+                    basesAdvanced = 1; // this is a single
                 } else if (clockMs == 98 || clockMs == 2) {
-                    result = 2;
+                    basesAdvanced = 2; //this is a double
                 } else if (clockMs == 99 || clockMs == 1) {
-                    result = 3;
+                    basesAdvanced = 3; //this is a triple
                 } else if (clockMs == 0) {
-                    result = 4;
+                    basesAdvanced = 4; //this is a homerun
                 } else {
-                    result = 0;
+                    basesAdvanced = 0; //this is an out
                 }
 
+                //stop the clock
                 this.clockData.timeStopped = new Date();
-
                 clearInterval(this.clockData.started);
+
 
                 var self = this;
                 setTimeout(function() {
-                    self.registerAtBat(result);
+                    //register the at bat and pass it the number of bases advanced
+                    self.registerAtBat(basesAdvanced);
                 }, 10)
 
             },
@@ -270,6 +301,58 @@
                     zero += '0';
                 }
                 return (zero + num).slice(-digit);
+            },
+
+            async fakeGame() {
+                this.registerAtBat(0);
+                await sleep(100);
+                alert("Out - There should be 1 out and no one on base");
+
+                this.registerAtBat(2);
+                await sleep(100);
+                alert("Double - There should be 1 out and bases [2]");
+
+                this.registerAtBat(1);
+                await sleep(100);
+                alert("Single - There should be 1 out and bases [1,3]");
+
+                this.registerAtBat(3);
+                await sleep(100);
+                alert("Triple - There should be 1 out and bases [3] and score should be 2-0");
+
+                this.registerAtBat(0);
+                await sleep(100);
+                alert("Out - There should be 2 outs and bases [3]");
+
+                this.registerAtBat(4);
+                await sleep(100);
+                alert("HR - There should be 2 outs and and no one on base and score should be 4-0");
+
+                this.registerAtBat(0);
+                await sleep(100);
+                alert("Out - Inning Switch");
+
+                ///BOTTOM OF THE FIRST
+                this.registerAtBat(0);
+                await sleep(100);
+                alert("Out - There should be 1 out and no one on base");
+
+                this.registerAtBat(1);
+                await sleep(100);
+                alert("Single - There should be 1 out and bases [1]");
+
+                this.registerAtBat(0);
+                await sleep(100);
+                alert("Out - There should be 2 outs and bases [1]");
+
+                this.registerAtBat(1);
+                await sleep(100);
+                alert("Single - There should be 2 outs and bases [1,2]");
+
+                this.registerAtBat(0);
+                await sleep(100);
+                alert("Out - Inning Change");
+
             }
 
         }

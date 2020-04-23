@@ -8,19 +8,37 @@
 <body>
     <div id="app">
         <h1>To Dos</h1>
-        <ul id="toDoList">
 
-            <li v-for="(toDo,index) in toDos" :class="toDo.completed?'checked':''">
-                <label>
-                    <input type="checkbox" class="to-do-checkbox">
-                    <span>{{toDo.text}}</span>
-                </label>
-                <a href="#" class="delete btn" @click="deleteToDo(index)">Delete</a>
-            </li>
-        </ul>
-        <input type="text" id="newToDoText" v-model="newToDoText" placeholder="New To Do Here">
-        <a href="#" @click="createNewToDo" class="btn">+ Add</a>
+        <todolist v-for="i in numberOfToDoLists" style="padding: 10px 0; border-bottom: 2px solid #CCC" v-bind:title="'My List '+i">
+
+        </todolist>
+
+        <a href="#" @click="addNewList">Add A New List</a>
+
     </div>
+
+
+
+
+    <script type="text/x-template" id="toDoListTemplate">
+        <div>
+            <h2>{{title}}</h2>
+            <ul id="toDoList" v-cloak>
+                <li v-for="(toDo,index) in toDos" :class="toDo.completed?'checked':''">
+                    <label>
+                        <input type="checkbox" class="to-do-checkbox" v-model="toDo.completed">
+                        <span>{{toDo.text}}</span>
+                    </label>
+                    <a href="#" class="delete btn" v-on:click="deleteToDo(index)">Delete</a>
+                </li>
+            </ul>
+
+            <input v-on:keyup.13="createNewToDo" type="text" id="newToDoText" v-model="newToDoText" placeholder="New To Do Here">
+            <a href="#" v-on:click="createNewToDo" class="btn">+ Add</a>
+        </div>
+    </script>
+
+
 </body>
 
 
@@ -29,35 +47,74 @@
         color: #CCC;
         text-decoration: line-through;
     }
+    
+    [v-cloak] {
+        display: none
+    }
 </style>
 
 <!-- This is our jquery implementation -->
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            newToDoText: '',
-            toDos: [{
-                text: 'Take Out The Trash',
-                completed: false
-            }, {
-                text: 'Clean The Bathroom',
-                completed: false
-            }, {
-                text: 'Feed The Cats',
-                completed: true
-            }]
+    Vue.component('todolist', { //<todolist />
+        props: ['title'],
+        data() {
+            return {
+                newToDoText: '',
+                toDos: []
+            }
         },
         methods: {
             createNewToDo() {
-                alert("CREATE TO DO HERE");
+                if (this.newToDoText == '') {
+                    return;
+                }
+                this.toDos.push({
+                    text: this.newToDoText,
+                    completed: false
+                })
+                this.newToDoText = '';
             },
             deleteToDo(index) {
                 alert("DELETE TO DO " + index)
+            },
+
+        },
+        template: '#toDoListTemplate'
+    })
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            numberOfToDoLists: 1
+        },
+        methods: {
+            addNewList() {
+                this.numberOfToDoLists++;
             }
         }
     })
+
+    // var object1 = {
+    //     propertyName1: 'value',
+    //     propertyName2: 'value2',
+    //     property3: [1,2,3,5],
+    //     property4IsAMethod: ()=>{
+
+    //     },
+    //     property5:{
+
+    //     }
+    // }
+
+    // var object2 = {
+    //     onlyPropery: '123'
+    // }
+
+    // var arrayOfObjects = [object1,object2];
+
+    // arrayOfObjects[0].property4IsAMethod();
 </script>
+
 
 </html>
