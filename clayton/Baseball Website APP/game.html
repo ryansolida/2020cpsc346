@@ -41,29 +41,24 @@
                             <td v-for="(inning,inningNumber) in gameState.runsPerInning">
                                 {{inningNumber}}
                             </td>
-                            <td id="Runs">Runs</td>
-                            <td id="hits">Hits</td>
+                            <td>Runs</td>
+                            <td>Hits</td>
                         </tr>
                         <tr>
                             <th id="firstbox">Away</th>
                             <td v-for="(inning,inningNumber) in gameState.runsPerInning">
                                 {{inning.visitor}}
                             </td>
-                            <td>
-
-                            </td>
-                            <td id="hits">{{awayTotalHits}}</td>
+                            <td id="visitorRuns">{{visitorScore}}</td>
+                            <td id="hits">{{gameState.hits.visitor}}</td>
                         </tr>
                         <tr>
                             <th id="firstbox">Home</th>
                             <td v-for="(inning,inningNumber) in gameState.runsPerInning">
                                 {{inning.home}}
                             </td>
-
-                            <td>
-                                <!-- {{inning.home}} -->
-                            </td>
-                            <td id="hits">{{homeTotalHits}}</td>
+                            <td id="homeRuns">{{homeScore}}</td>
+                            <td id="hits">{{gameState.hits.home}}</td>
                         </tr>
                     </table>
                 </div>
@@ -105,11 +100,15 @@
                         visitor: 0
                     }
                 },
-                // This is when the game starts
+                // This is when the game starts, this is objects
                 baseRunners: [],
                 currentInning: 1,
                 currentOuts: 0,
-                currentlyBatting: 'visitor' //home|visitor
+                currentlyBatting: 'visitor', //home|visitor
+                hits: {
+                    home: 0,
+                    visitor: 0,
+                }
             },
             // This is the clock settings when it's at zero
             clockData: {
@@ -124,16 +123,20 @@
         },
         computed: {
             homeScore() {
-                return 0;
+                console.log("checking for score changes")
+                var score = 0;
+                for (var i in this.gameState.runsPerInning) {
+                   score += this.gameState.runsPerInning[i].home
+                }
+                return score;
             },
             visitorScore() {
-                return 0;
-            },
-            awayTotalHits() {
-                return 0
-            },
-            homeTotalHits() {
-                return 0
+                console.log("checking for score changes")
+                var score = 0;
+                for (var i in this.gameState.runsPerInning) {
+                   score += this.gameState.runsPerInning[i].visitor
+                }
+                return score;
             },
             outsPerInning() {
                 return this.gameState.currentOuts;
@@ -166,11 +169,20 @@
                     }
 
                     return; //IF THIS AN OUT DON'T GO ANY FURTHER IN THIS FUNCTION
-
                 }
+                // this code sees who is currently batting and registers and adds a
+                //a hit to the score board if they got a hit!.
+
+                if (this.gameState.currentlyBatting == 'visitor')
+                    this.gameState.hits.visitor++;
+                if (this.gameState.currentlyBatting == 'home')
+                    this.gameState.hits.home++;
+                //if visitor currently batting add to visitor
+                //same with home
 
 
-                console.log("CURRENT BASE RUNNERS: " + this.gameState.baseRunners.length);
+
+                // console.log("CURRENT BASE RUNNERS: " + this.gameState.baseRunners.length);
                 for (var i in this.gameState.baseRunners) { //for everyone already on base
                     var currentBaseofThisRunner = this.gameState.baseRunners[i]
                     currentBaseofThisRunner = currentBaseofThisRunner + basesAdvanced; //advance them by our current hit
@@ -306,52 +318,52 @@
             async fakeGame() {
                 this.registerAtBat(0);
                 await sleep(100);
-                alert("Out - There should be 1 out and no one on base");
+                // alert("Out - There should be 1 out and no one on base");
 
                 this.registerAtBat(2);
                 await sleep(100);
-                alert("Double - There should be 1 out and bases [2]");
+                // alert("Double - There should be 1 out and bases [2]");
 
                 this.registerAtBat(1);
                 await sleep(100);
-                alert("Single - There should be 1 out and bases [1,3]");
+                // alert("Single - There should be 1 out and bases [1,3]");
 
                 this.registerAtBat(3);
                 await sleep(100);
-                alert("Triple - There should be 1 out and bases [3] and score should be 2-0");
+                // alert("Triple - There should be 1 out and bases [3] and score should be 2-0");
 
                 this.registerAtBat(0);
                 await sleep(100);
-                alert("Out - There should be 2 outs and bases [3]");
+                // alert("Out - There should be 2 outs and bases [3]");
 
                 this.registerAtBat(4);
                 await sleep(100);
-                alert("HR - There should be 2 outs and and no one on base and score should be 4-0");
+                // alert("HR - There should be 2 outs and and no one on base and score should be 4-0");
 
                 this.registerAtBat(0);
                 await sleep(100);
-                alert("Out - Inning Switch");
+                // alert("Out - Inning Switch");
 
                 ///BOTTOM OF THE FIRST
                 this.registerAtBat(0);
                 await sleep(100);
-                alert("Out - There should be 1 out and no one on base");
+                // alert("Out - There should be 1 out and no one on base");
 
                 this.registerAtBat(1);
                 await sleep(100);
-                alert("Single - There should be 1 out and bases [1]");
+                // alert("Single - There should be 1 out and bases [1]");
 
                 this.registerAtBat(0);
                 await sleep(100);
-                alert("Out - There should be 2 outs and bases [1]");
+                // alert("Out - There should be 2 outs and bases [1]");
 
                 this.registerAtBat(1);
                 await sleep(100);
-                alert("Single - There should be 2 outs and bases [1,2]");
+                // alert("Single - There should be 2 outs and bases [1,2]");
 
                 this.registerAtBat(0);
                 await sleep(100);
-                alert("Out - Inning Change");
+                // alert("Out - Inning Change");
 
             }
 
