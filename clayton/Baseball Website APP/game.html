@@ -82,13 +82,13 @@
     const sleep = (milliseconds) => {
         return new Promise(resolve => setTimeout(resolve, milliseconds))
     }
-    var clock = new Vue({
-        el: '#vueApp',
-        data: {
-            gameState: {
-                runsPerInning: {
+    var clock = new Vue({ //created a new vue data for clock
+        el: '#vueApp', //element for vue app
+        data: { //the data inside for the application
+            gameState: { //the status of the game
+                runsPerInning: { // this is inside the inninge and how many innings there are
                     1: {
-                        home: 0,
+                        home: 0, //this sets each new inning to 0 from the start
                         visitor: 0
                     },
                     2: {
@@ -101,55 +101,53 @@
                     }
                 },
                 // This is when the game starts, this is objects
-                baseRunners: [],
-                currentInning: 1,
-                currentOuts: 0,
-                currentlyBatting: 'visitor', //home|visitor
-                hits: {
-                    home: 0,
+                baseRunners: [],//this is empty because there should be no runners on yet
+                currentInning: 1, //inning is 1 because you have to start in the first
+                currentOuts: 0, //the game starts with 0 outs
+                currentlyBatting: 'visitor', //home|visitor the visitors are always up first
+                hits: { //new object that helps calculate all the hits for each team
+                    home: 0, //both start with 0 hits
                     visitor: 0,
                 }
             },
             // This is the clock settings when it's at zero
-            clockData: {
-                time: "00:00.00",
-                timeBegan: null,
-                timeStopped: null,
-                stoppedDuration: 0,
-                started: null,
-                running: false,
-                clockMs: 0
+            clockData: { //this is the clock data
+                time: "00:00.00", //everytime you reset the clock it starts at zero till start
+                timeBegan: null, //it's null because we haven't started it yet
+                timeStopped: null, //it hasn't been started so it can't stop
+                stoppedDuration: 0, //this means that when you do hit stop it starts the code back to 0
+                started: null, //this happens when you hit the code from the button
+                running: false, //this is false because you have to hit the button to start it
+                clockMs: 0 //clock is going from milliseconds
             }
         },
-        computed: {
-            homeScore() {
-                console.log("checking for score changes")
-                var score = 0;
-                for (var i in this.gameState.runsPerInning) {
-                   score += this.gameState.runsPerInning[i].home
+        computed: { //this is where most of the calculations come from
+            homeScore() { //this is the object for the home team's total score which is also in the html
+                var score = 0; //this creates a new var called score that is only used in this method
+                for (var i in this.gameState.runsPerInning) { //this means that in the gameState, it looks in each inning and calculates the number of runs
+                   score += this.gameState.runsPerInning[i].home //the score updates everytime gameState.runsPerInning is hit for the home team
                 }
-                return score;
+                return score; //this returns the score and closes the methodd
             },
-            visitorScore() {
-                console.log("checking for score changes")
+            visitorScore() { //this is the same as the home score
                 var score = 0;
                 for (var i in this.gameState.runsPerInning) {
                    score += this.gameState.runsPerInning[i].visitor
                 }
                 return score;
             },
-            outsPerInning() {
+            outsPerInning() { //this calculates the outs in each inning always starting at 0
                 return this.gameState.currentOuts;
             },
-            topOrBottom() {
+            topOrBottom() { //this helps us see where we are in the inning, Top means the visitors are up and bottom is home
                 if (this.gameState.currentlyBatting == 'visitor') {
-                    return 'Top';
+                    return 'Top'; 
                 } else {
                     return 'Bottom'
                 }
             }
         },
-        mounted() {
+        mounted() { //this is the fake pre game we have on the bottom for testing purposes
             this.fakeGame();
         },
         methods: {
@@ -162,46 +160,44 @@
                 //4. We put the batter on base
 
                 if (basesAdvanced == 0) { //that's an out
-                    this.gameState.currentOuts++; // FIXS, this makes it so that there is 1 out to start with
+                    this.gameState.currentOuts++; //this adds an out everytime a hit doesn't happen
 
                     if (this.gameState.currentOuts == 3) { //this is 3 outs so we're changing innings
-                        this.changeInning();
+                        this.changeInning(); //we change the inning to top or bottom
                     }
 
-                    return; //IF THIS AN OUT DON'T GO ANY FURTHER IN THIS FUNCTION
+                    return; //IF THIS is AN OUT DON'T GO ANY FURTHER IN THIS FUNCTION
                 }
                 // this code sees who is currently batting and registers and adds a
                 //a hit to the score board if they got a hit!.
 
                 if (this.gameState.currentlyBatting == 'visitor')
-                    this.gameState.hits.visitor++;
+                    this.gameState.hits.visitor++; //adds a hit for the visitors
                 if (this.gameState.currentlyBatting == 'home')
-                    this.gameState.hits.home++;
+                    this.gameState.hits.home++; //adds a hit for the visitors
                 //if visitor currently batting add to visitor
                 //same with home
 
 
-
-                // console.log("CURRENT BASE RUNNERS: " + this.gameState.baseRunners.length);
                 for (var i in this.gameState.baseRunners) { //for everyone already on base
-                    var currentBaseofThisRunner = this.gameState.baseRunners[i]
+                    var currentBaseofThisRunner = this.gameState.baseRunners[i] //inside this method we set a new var that is easier to track for baseRunners
                     currentBaseofThisRunner = currentBaseofThisRunner + basesAdvanced; //advance them by our current hit
                     this.gameState.baseRunners[i] = currentBaseofThisRunner; //update the runner's base with his new base
                 }
 
 
-                this.gameState.baseRunners.push(basesAdvanced); //add our new base runner
+                this.gameState.baseRunners.push(basesAdvanced); //the push adds our new base runner
 
 
                 //check for runs
                 for (var i in this.gameState.baseRunners) {
                     if (this.gameState.baseRunners[i] >= 4) { //Added the >= 4 this means that anything for 4 bases equals a run
-                        this.registerRun();
+                        this.registerRun(); //we register a run for 
                     }
                 }
 
                 //This clears out the Array so that any baseRunners over 4 are moved out and count as a score.
-                var underBaseFour = [];
+                var underBaseFour = []; //clears the array
                 for (var i in this.gameState.baseRunners) {
                     if (this.gameState.baseRunners[i] < 4) {
                         underBaseFour.push(this.gameState.baseRunners[i]);
@@ -210,10 +206,10 @@
                 this.gameState.baseRunners = underBaseFour;
 
             },
-            registerRun: function() {
+            registerRun: function() { //this offically adds the new run
                 this.gameState.runsPerInning[this.gameState.currentInning][this.gameState.currentlyBatting] += 1;
 
-            },
+            },//changes the inning if it's not visitors, then it't home batting
             changeInning() {
                 if (this.gameState.currentlyBatting == 'visitor') {
                     this.gameState.currentlyBatting = 'home';
@@ -222,13 +218,17 @@
                     this.gameState.currentInning++;
                 }
 
-                //RESET STATE FOR INNING
+                //RESET STATE FOR NEW INNING
                 this.gameState.currentOuts = 0;
-                this.gameState.baseRunners = []
-                    //TODO reset base runners
+                this.gameState.baseRunners = [];
 
                 //TODO what do we do at the end of the game?
-
+                
+            if (this.gameState.currentInning == 4)
+                return this.gameState.reload();
+            console.log("End of game")
+                
+                
             },
 
 
@@ -370,8 +370,6 @@
         }
     });
 
-
-    // zeroPrefix(100, 2);
 </script>
 
 
